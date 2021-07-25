@@ -155,7 +155,7 @@ uniform float time;
 #define STEPS 100
 #define EPS 0.001
 #define NEAR 0.
-#define FAR 45
+#define FAR 45.
 #define AA 2
 #define seed 5425122
 
@@ -331,7 +331,7 @@ vec3 p = ro + rd * d.x;
 vec3 n = calcNormal(p);
 
 vec3 l = normalize(vec3(.005));
-l.xz *= rot(time*.001)
+l.xz *= rot(time*.001);
 
 vec3 h = normalize(l - rd);
 vec3 r = reflect(rd,n);
@@ -361,7 +361,7 @@ if(d.y == 10.) {
 float nl;
 
 if(d.y == 3.) {
-    nl += f3(p+f3(p,8.,h11(21.)),6,h11(90.));
+    nl += f3(p+f3(p,8,h11(21.)),6,h11(90.));
     col += vec3(nl);
 
 }
