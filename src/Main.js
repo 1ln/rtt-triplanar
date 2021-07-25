@@ -49,7 +49,7 @@ vec2 scene(vec3 p) {
     d = box(p,vec3(1.));
 
     res = opu(res,vec2(d,2.)); 
-    res = opu(res,vec2(box(p,vec3(25.)),2.));
+    res = opu(res,vec2(-box(p,vec3(25.)),3.));
 
   return res;
 
@@ -125,7 +125,7 @@ void main() {
 
 vec3 color = vec3(0.);
 
-vec3 ro = vec3(1.,2.,5.);
+vec3 ro = vec3(2.);
 ro.xy *= rot(time*0.15);
 
 vec3 ta = vec3(0.0);
@@ -370,7 +370,7 @@ void main() {
 
 vec3 color = vec3(0.);
 
-vec3 ro = vec3(1.,2.,5.);
+vec3 ro = vec3(3.);
 vec3 ta = vec3(0.0);
 
 ro.xz *= rot(time*0.1);
@@ -511,6 +511,7 @@ class Main {
 
         const mesh = new Mesh(plane,material);
         scene_rtt.add(mesh);
+
 
 
     }
