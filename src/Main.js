@@ -219,12 +219,6 @@ mat3 camOrthographic(vec3 ro,vec3 ta,float r) {
      return mat3(u,v,w); 
 } 
 
-vec3 repeat(vec3 p,vec3 s) {
-   
-    vec3 q = mod(p,s) - 0.5 * s;
-    return q;
-} 
-
 vec2 opu(vec2 d1,vec2 d2) {
     return (d1.x < d2.x) ? d1 : d2;
 } 
@@ -232,11 +226,6 @@ vec2 opu(vec2 d1,vec2 d2) {
 float sphere(vec3 p,float r) { 
      
     return length(p) - r;
-}
-
-float plane(vec3 p,vec4 n) {
-
-    return dot(p,n.xyz) + n.w;
 }
 
 float box(vec3 p,vec3 b) {
@@ -251,10 +240,10 @@ vec2 scene(vec3 p) {
 
     float d = 0.;     
     d = -box(p,vec3(10.));
+    res = opu(res,vec2(d,10.)); 
+    res = opu(res,vec2(sphere(p-vec3(5.),1.),2.)); 
 
-    res = opu(res,vec2(d,2.)); 
-  
-  return res;
+    return res;
 
 }
 
@@ -352,6 +341,10 @@ ref *= shadow(p,r);
 
 linear += dif * vec3(.5);
 linear += amb * vec3(0.01,0.05,0.05);
+
+if(d.y == 10.) {
+    col = vec3(.5);
+}
 
 if(d.y == 2.) {
 
