@@ -10,7 +10,7 @@ uniform float time;
 #define STEPS 255
 #define EPS 0.00001
 #define NEAR 0.
-#define FAR 75.;
+#define FAR 75.
 
 mat2 rot(float a) {
 
@@ -102,6 +102,7 @@ if(d.y >= 0.) {
 vec3 p = ro + rd * d.x;
 vec3 n = calcNormal(p);
 vec3 l = normalize(vec3(10.));
+l.yz *= rot(time*.01);
 
 float dif = dot(n,l)*0.5+0.5;
 
@@ -151,10 +152,10 @@ uniform vec2 resolution;
 uniform sampler2D tex;
 uniform float time;
 
-#define STEPS 255
-#define EPS 0.00001
+#define STEPS 100
+#define EPS 0.001
 #define NEAR 0.
-#define FAR 500.
+#define FAR 45
 #define AA 2
 #define seed 5425122
 
@@ -239,10 +240,18 @@ vec2 scene(vec3 p) {
 
     vec2 res = vec2(1.,0.);
 
+    vec3 q = p;
+    vec3 l = p;
+
     float d = 0.;     
     d = -box(p,vec3(10.));
     res = opu(res,vec2(d,10.)); 
-    res = opu(res,vec2(box(p,vec3(1.)),2.)); 
+    
+    q.yz *= rot(time*.01);
+    l.zy *= rot(time*.01);
+
+    res = opu(res,vec2(box(q-vec3(-2.,0.,2.),vec3(1.)),3.));
+    res = opu(res,vec2(box(l-vec3(2.,0.,-2.),vec3(1.)),2.)); 
     
 
     return res;
@@ -321,7 +330,8 @@ if(d.y >= 0.) {
 vec3 p = ro + rd * d.x;
 vec3 n = calcNormal(p);
 
-vec3 l = normalize(vec3(3.));
+vec3 l = normalize(vec3(.005));
+l.xz *= rot(time*.001)
 
 vec3 h = normalize(l - rd);
 vec3 r = reflect(rd,n);
@@ -348,9 +358,15 @@ if(d.y == 10.) {
     col = vec3(.5);
 }
 
-if(d.y == 2.) {
+float nl;
 
-    float nl; 
+if(d.y == 3.) {
+    nl += f3(p+f3(p,8.,h11(21.)),6,h11(90.));
+    col += vec3(nl);
+
+}
+
+if(d.y == 2.) { 
     nl += f3(p+f3(p,4,h11(390.)),6,h11(35.));
     col += vec3(nl);
 
