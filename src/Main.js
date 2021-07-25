@@ -10,7 +10,7 @@ uniform float time;
 #define STEPS 255
 #define EPS 0.00001
 #define NEAR 0.
-#define FAR 500.
+#define FAR 75.;
 
 mat2 rot(float a) {
 
@@ -49,6 +49,7 @@ vec2 scene(vec3 p) {
     d = box(p,vec3(1.));
 
     res = opu(res,vec2(d,2.)); 
+    res = opu(res,vec2(box(p,vec3(25.)),2.));
 
   return res;
 
@@ -241,7 +242,8 @@ vec2 scene(vec3 p) {
     float d = 0.;     
     d = -box(p,vec3(10.));
     res = opu(res,vec2(d,10.)); 
-    res = opu(res,vec2(sphere(p-vec3(5.),1.),2.)); 
+    res = opu(res,vec2(box(p,vec3(1.)),2.)); 
+    
 
     return res;
 
@@ -285,7 +287,7 @@ float shadow(vec3 ro,vec3 rd) {
         ph = h;
         t += h;
     
-        if(res < EPS || t > 100.) { break; }
+        if(res < EPS || t > 10.) { break; }
 
         }
 
